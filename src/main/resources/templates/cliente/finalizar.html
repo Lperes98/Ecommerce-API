@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt"  xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{cliente/fragments/layout}">
+
+    <head>
+        <title>Finalizar a Compras</title>
+    </head>
+    <header>
+        <header class="bg-light py-5" layout:fragment="header">
+            <section class="jumbotron text-center">
+                <div class="container">
+                    <h1 class="jumbotron-heading">CHECKOUT</h1>
+                </div>
+            </section>
+    </header>
+    <body>
+        <!-- Page Content-->
+        <div class="container" layout:fragment="corpo">
+            <div class="row">
+                <div class="col-12">
+                    informações do cliente
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th scope="col"> </th>
+                                <th scope="col">Produto</th>
+                                <th scope="col" class="text-center">Quantidade</th>
+                                <th scope="col"class="text-right">Preço Und.</th>
+                                <th scope="col" class="text-right">Preço Total</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="item : ${listaItens}">
+                                <td><img th:src="@{/mostrarImagem/{imagem}(imagem=${item.produtos.nomeImagem})}" width="50"/> </td>
+                                <td th:text="${item.produtos.nome}"></td>
+                                <td class="text-center">
+                                    &nbsp; <span th:text="${item.quantidade}"></span> &nbsp;
+                                </td>
+                                <td th:text="${item.valorUnitario}" class="text-right"></td>
+                                <td th:text="${item.valorTotal}" class="text-right"></td>
+
+                            </tr>
+
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td class="text-right">Sub-Total</td>
+                                <td class="text-right"><span th:text="${compra.valorTotal}"></span></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td class="text-right">Frete</td>
+                                <td class="text-right">0,00</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td class="text-right"><strong>Valor Total</strong></td>
+                                <td class="text-right" ><strong><span th:text="${compra.valorTotal}"></span></strong></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 text-center">
+                            <a class="btn btn-block  btn-success text-uppercase">Confirmar</a>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+
+        </div>
+
+
+    </body>
+</html>

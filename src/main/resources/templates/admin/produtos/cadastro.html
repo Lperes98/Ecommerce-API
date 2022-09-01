@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{admin/fragments/layout}">
+<head>
+  <title>Pagina Principal Cadastro de Produtos da Loja Virtual</title>
+
+  <!-- Adicionando JQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+          integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+          crossorigin="anonymous"></script>
+
+</head>
+<body>
+  <section class="layout-content" layout:fragment="corpo">
+    <div class="page-header">
+     <nav class="navbar navbar-expand-md navbar-top bg-light">
+       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+         <ul class="navbar-nav">
+            <li class="nav-item active"><i class="oi oi-caret-right"></i>
+              <span>Cadastrar Produto</span></li>
+        </ul>
+      </div>
+      <p>
+      <a class="btn btn-primary btn-md"
+         href="/produtos/listar" role="button"> <span
+              class="oi oi-spreadsheet" title="Cadastro" aria-hidden="true"></span>
+        <span>Listar Produtos</span>
+      </a>
+
+      <a class="btn btn-primary btn-md"
+         href="/admin" role="button"> <span
+              class="oi oi-menu" title="Cadastro" aria-hidden="true"></span>
+        <span>Voltar ao Painel</span>
+      </a>
+      </p>
+    </nav>
+  </div>
+
+  <div class="container" id="cadastro">
+    <form action="/produtos/salvar" enctype="multipart/form-data"
+          th:object="${produto}" method="POST">
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="nome">Nome do Produto</label> <input type="text"
+                                                               class="form-control" id="nome" placeholder="Nome do Produto"
+                                                               autofocus="autofocus" th:field="*{nome}" value="" />
+          <div class="invalid-feedback"></div>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="descricao">Descrição</label> <input type="text"
+                                                            class="form-control" id="descricao"
+                                                            th:field="*{descricao}" value="" />
+          <div class="invalid-feedback"></div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="valorVenda">Valor do Produto</label> <input type="text"
+                                                                  class="form-control" id="valorVenda"
+                                                                  th:field="*{valorVenda}" value="" />
+          <div class="invalid-feedback"></div>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="categoria">Categoria</label> <input type="text"
+                                              class="form-control" id="categoria"  name="categoria" th:field="*{categoria}" data-mask-reverse="true"
+                                              value="" />
+          <div class="invalid-feedback"></div>
+        </div>
+
+      </div>
+
+      <div class="form-row">
+
+        <div class="form-group col-md-6">
+          <label for="marca">Marca</label> <input type="text"
+                                                  class="form-control" id="marca"  name="marca" th:field="*{marca}" data-mask-reverse="true"
+                                                  value="" />
+          <div class="invalid-feedback"></div>
+        </div>
+
+      </div>
+
+        <div class="form-group col-md-12">
+          <input type="file" name="file"/>
+        </div>
+
+
+
+      <input type="hidden" id="id" th:field="*{id}" value="" />
+      <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
+    </form>
+  </div>
+</section>
+
+</body>
+</html>

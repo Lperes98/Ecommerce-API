@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{admin/fragments/layout}">
+<head>
+  <title>Pagina de Cadastro de Permissoes da Loja Virtual</title>
+
+  <!-- Adicionando JQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+          integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+          crossorigin="anonymous"></script>
+
+  <!-- Adicionando Javascript -->
+
+
+</head>
+<body>
+  <section class="layout-content" layout:fragment="corpo">
+    <div class="page-header">
+     <nav class="navbar navbar-expand-md navbar-top bg-light">
+       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+         <ul class="navbar-nav">
+            <li class="nav-item active"><i class="oi oi-caret-right"></i>
+              <span>Cadastrar Permissão</span></li>
+        </ul>
+      </div>
+      <p>
+      <a class="btn btn-primary btn-md"
+         href="/permissao/listar" role="button"> <span
+              class="oi oi-spreadsheet" title="Cadastro" aria-hidden="true"></span>
+        <span>Listar Permissões</span>
+      </a>
+
+      <a class="btn btn-primary btn-md"
+         href="/admin" role="button"> <span
+              class="oi oi-menu" title="Cadastro" aria-hidden="true"></span>
+        <span>Voltar ao Painel</span>
+      </a>
+      </p>
+    </nav>
+  </div>
+
+  <div class="container" id="cadastro">
+    <form action="/permissao/salvar"
+          th:object="${permissao}" method="POST">
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label>Funcionario</label>
+            <select th:field="*{funcionario}" class="form-control">
+                <option th:each="fun: ${listaFuncionarios}" th:value="${fun.id}" th:text="${fun.nome}"></option>
+
+
+            </select>
+          <div class="invalid-feedback"></div>
+
+        </div>
+
+          <div class="form-group col-md-6">
+              <label>Papel</label>
+              <select th:field="*{papel}" class="form-control">
+                  <option th:each="papel: ${listaPapeis}" th:value="${papel.id}" th:text="${papel.nome}"></option>
+
+
+              </select>
+              <div class="invalid-feedback"></div>
+
+          </div>
+
+
+      </div>
+
+
+      <input type="hidden" id="id" th:field="*{id}" value="" />
+      <button type="submit" class="btn btn-outline-primary btn-lg btn-block">Salvar</button>
+    </form>
+  </div>
+</section>
+
+</body>
+</html>
