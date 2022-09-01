@@ -1,5 +1,7 @@
 # Ecommerce completo
 
+## PROJETO EM ANDAMENTO AINDA!
+
 ### Fiz esse ecommerce para treinar alguns conhecimentos, ele é completo!
 
 - DashBoard para funcionários contendo:
