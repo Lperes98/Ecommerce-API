@@ -1,10 +1,17 @@
 package com.lojavirtual.controller;
 
+import com.lojavirtual.modelos.Cliente;
 import com.lojavirtual.modelos.Compra;
 import com.lojavirtual.modelos.ItensCompra;
 import com.lojavirtual.modelos.Produtos;
+import com.lojavirtual.repositorios.ClienteRepositorio;
+import com.lojavirtual.repositorios.CompraRepositorio;
+import com.lojavirtual.repositorios.ItensCompraRepositorio;
 import com.lojavirtual.repositorios.ProdutosRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,11 +26,19 @@ import java.util.Optional;
 public class CarrinhoControle {
 
     private List<ItensCompra> itensCompra = new ArrayList<ItensCompra>();
-
     private Compra compra = new Compra();
+    private Cliente cliente;
 
     @Autowired
     private ProdutosRepositorio produtosRepositorio;
+
+    @Autowired
+    private CompraRepositorio compraRepositorio;
+    @Autowired
+    private ClienteRepositorio clienteRepositorio;
+
+    @Autowired
+    private ItensCompraRepositorio itensCompraRepositorio;
 
     private void calcularTotal(){
         compra.setValorTotal(0.);
@@ -32,15 +47,42 @@ public class CarrinhoControle {
         }
     }
 
+    private void buscarUsuarioLogado(){
+        Authentication autenticado = SecurityContextHolder.getContext().getAuthentication();
+        if(!(autenticado instanceof AnonymousAuthenticationToken)){
+            String email = autenticado.getName();
+            cliente = clienteRepositorio.buscarClienteEmail(email).get(0);
+        }
+    }
+
     @RequestMapping(value = "/finalizar", method = RequestMethod.GET)
     public ModelAndView chamarFinalizar() {
+        buscarUsuarioLogado();
         ModelAndView mv = new ModelAndView("cliente/finalizar");
         calcularTotal();
         mv.addObject("compra", compra);
         mv.addObject("listaItens", itensCompra);
+        mv.addObject("cliente", cliente);
         return mv;
     }
 
+    @RequestMapping(value = "/finalizar/confirmar", method = RequestMethod.POST)
+    public ModelAndView confirmarCompra(String formaPagamento){
+        ModelAndView mv = new ModelAndView("cliente/mensagemFinalizou");
+        compra.setCliente(cliente);
+        compra.setFormaPagamento(formaPagamento);
+        compraRepositorio.save(compra);
+
+        for(ItensCompra it: itensCompra){
+            it.setCompra(compra);
+            itensCompraRepositorio.save(it);
+        }
+
+        itensCompra = new ArrayList<>();
+        compra = new Compra();
+
+        return mv;
+    }
 
 
     @RequestMapping(value = "/carrinho", method = RequestMethod.GET)

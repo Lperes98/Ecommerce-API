@@ -1,30 +1,24 @@
 package com.lojavirtual.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.annotation.Order;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
 @Order(2)
-public class WebSecurityConfig {
+public class SecurityAdmin {
 
 
     @Autowired
@@ -33,7 +27,6 @@ public class WebSecurityConfig {
 
 
     @Bean
-    @Primary
     public AuthenticationManagerBuilder managerBuilder(AuthenticationManagerBuilder auth)throws Exception{
         auth.jdbcAuthentication()
                         .usersByUsernameQuery("select email as username, senha as password, 1 as enable from funcionario where email=?")
@@ -67,11 +60,6 @@ public class WebSecurityConfig {
         return http.build();
     }
 
-
-    @Bean
-    public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
 
 
 

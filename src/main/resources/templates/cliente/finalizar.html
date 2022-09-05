@@ -15,13 +15,55 @@
     <body>
         <!-- Page Content-->
         <div class="container" layout:fragment="corpo">
+            <h3 style="text-align: center">DADOS DO CLIENTE</h3>
             <div class="row">
                 <div class="col-12">
-                    informações do cliente
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th scope="col">Nome</th>
+                                <th scope="col" >CPF</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Cidade</th>
+                                <th scope="col">CEP</th>
+                                <th scope="col">Logradouro</th>
+                                <th scope="col">Número</th>
+                                <th scope="col">Bairro</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="cliente : ${cliente}">
+                                <td th:text="${cliente.nome}"></td>
+                                <td th:text="${cliente.cpf}"></td>
+                                <td th:text="${cliente.email}"></td>
+                                <td th:text="${cliente.localidade}"></td>
+                                <td th:text="${cliente.cep}"></td>
+                                <td th:text="${cliente.logradouro}"></td>
+                                <td th:text="${cliente.numero}"></td>
+                                <td th:text="${cliente.bairro}"></td>
+
+                            </tr>
+                            </tbody>
+
+                        </table>
+                        <form action="/finalizar/confirmar" method="POST">
+
+                        <h6 style="text-align: center">MEIO DE PAGAMENTO</h6>
+                        <select class="form-select"  name="formaPagamento">
+                            <option Selecione>Meio de pagamento</option>
+                            <option value="cartao de credito">Cartão de Crédito</option>
+                            <option value="cartao de debito">Cartão de Débito</option>
+                            <option value="boleto">Boleto</option>
+                            <option value="pix">PIX</option>
+                        </select>
+                    </div>
                 </div>
             </div>
-
-
+            <br>
+            <br>
+            <br>
+            <h3 style="text-align: center">INFORMAÇÕES DO CARRINHO</h3>
             <div class="row">
                 <div class="col-12">
                     <div class="table-responsive">
@@ -75,11 +117,12 @@
                 <div>
                     <div class="row">
                         <div class="col-sm-12 col-md-12 text-center">
-                            <a class="btn btn-block  btn-success text-uppercase">Confirmar</a>
+                            <button class="btn btn-block  btn-success text-uppercase">Confirmar a Compra</button>
+                            <!--<a href="/finalizar/confirmar" class="btn btn-block  btn-success text-uppercase">Confirmar</a>-->
                         </div>
                     </div>
                 </div>
-
+            </form>
 
             </div>
 
